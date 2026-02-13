@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Valentine ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  overflow: hidden;
+  text-align: center;
+  color: white;
+}
+
+.container {
+  margin-top: 20vh;
+  position: relative;
+}
+
+/* Buttons */
+button {
+  padding: 12px 25px;
+  font-size: 16px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  transition: transform 0.2s ease;
+}
+
+button:hover { transform: scale(1.1); }
+
+.yes { background-color: #ff4b5c; color: white; }
+.no {
+  background-color: white;
+  color: #ff4b5c;
+  position: absolute;
+}
+
+/* Floating hearts */
+.heart {
+  position: fixed;
+  bottom: -10px;
+  font-size: 20px;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity:1; }
+  100% { transform: translateY(-110vh); opacity:0; }
+}
+
+/* Second page */
+#secondPage { display:none; }
+
+.ring {
+  font-size: 80px;
+  animation: popRing 1s ease forwards;
+}
+
+@keyframes popRing {
+  0% { transform: scale(0); }
+  100% { transform: scale(1.2); }
+}
+
+/* Slideshow */
+.slideshow {
+  width: 250px;
+  height: 250px;
+  margin: 20px auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 20px white;
+}
+
+.slideshow img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Timer */
+.timer {
+  font-size: 18px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Fireworks */
+.firework {
+  position: fixed;
+  font-size: 25px;
+  animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+  0% { transform: scale(0); opacity:1; }
+  100% { transform: scale(3); opacity:0; }
+}
+
+.message {
+  font-weight: bold;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="firstPage">
+  <h1>Bava my happiness 💕<br>Will you be my Valentine?</h1>
+
+  <button class="yes" onclick="showLove()">Yes ❤️</button>
+  <button class="no" id="noBtn" onmouseover="moveButton()">No 💔</button>
+
+  <div class="message" id="funMsg"></div>
+</div>
+
+<div class="container" id="secondPage">
+  <div class="ring">💍</div>
+  <h1>Forever Starts Now 💖</h1>
+
+  <div class="slideshow">
+    <img id="slide" src="photo1.jpg">
+  </div>
+
+  <div class="timer" id="loveTimer"></div>
+
+  <p>I choose you today, tomorrow & always ❤️</p>
+</div>
+
+<audio id="loveMusic" loop>
+  <source src="love.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* Funny running No button */
+let msgs = ["Can't catch me 😜", "Not happening!", "Try again!", "Click Yes 😍"];
+let count = 0;
+
+function moveButton() {
+  const btn = document.getElementById("noBtn");
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 50);
+  btn.style.left = x + "px";
+  btn.style.top = y + "px";
+
+  document.getElementById("funMsg").innerText =
+    msgs[count % msgs.length];
+  count++;
+}
+
+/* When Yes clicked */
+function showLove() {
+  document.getElementById("firstPage").style.display="none";
+  document.getElementById("secondPage").style.display="block";
+  document.getElementById("loveMusic").play();
+  startFireworks();
+}
+
+/* Floating hearts */
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random()*100+"vw";
+  heart.style.animationDuration = (3+Math.random()*3)+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,400);
+
+/* Fireworks */
+function startFireworks(){
+  for(let i=0;i<25;i++){
+    let fw=document.createElement("div");
+    fw.className="firework";
+    fw.innerHTML="✨";
+    fw.style.left=Math.random()*100+"vw";
+    fw.style.top=Math.random()*100+"vh";
+    document.body.appendChild(fw);
+    setTimeout(()=>fw.remove(),1000);
+  }
+}
+
+/* Slideshow */
+let photos=["photo1.jpg","photo2.jpg","photo3.jpg"];
+let index=0;
+setInterval(()=>{
+  index=(index+1)%photos.length;
+  document.getElementById("slide").src=photos[index];
+},3000);
+
+/* Love Timer */
+let startDate=new Date("2020-06-10"); // CHANGE THIS
+function updateTimer(){
+  let now=new Date();
+  let diff=now-startDate;
+  let days=Math.floor(diff/(1000*60*60*24));
+  document.getElementById("loveTimer").innerText=
+  "Together for "+days+" beautiful days ❤️";
+}
+setInterval(updateTimer,1000);
+updateTimer();
+</script>
+
+</body>
+</html>
