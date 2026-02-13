@@ -140,35 +140,33 @@ button:hover { transform: scale(1.1); }
 <script>
 /* Funny running No button */
 let msgs = [
-  "Can't catch me 😜",
-  "Not happening!",
-  "Are you sure? 😏",
-  "Try again!",
-  "Click Yes naa 😍",
-  "Hehe 😆"
+  "Can't touch this! 😜",
+  "Not happening! 😏",
+  "Try again! 😆",
+  "Haha! 💕",
+  "Click Yes already! ❤️"
 ];
 
-let count = 0;
+let count = 0; // keeps track of messages
 
 function moveButton() {
   const btn = document.getElementById("noBtn");
 
+  // Move the button to random position
   const x = Math.random() * (window.innerWidth - 120);
   const y = Math.random() * (window.innerHeight - 60);
-
   btn.style.left = x + "px";
   btn.style.top = y + "px";
 
-  // Rotate messages properly
-  document.getElementById("funMsg").innerText = msgs[count];
-  
-  count++;
-  if (count >= msgs.length) {
-    count = 0; // restart from first message
+  // Show messages in order
+  if(count < msgs.length){
+    document.getElementById("funMsg").innerText = msgs[count];
+    count++;
+  } else {
+    // After all messages, show final fun message
+    document.getElementById("funMsg").innerText = "Finally clicks on Yes 😍";
   }
 }
-
-
 /* When Yes clicked */
 function showLove() {
   document.getElementById("firstPage").style.display="none";
@@ -217,7 +215,7 @@ function updateTimer(){
   let diff=now-startDate;
   let days=Math.floor(diff/(1000*60*60*24));
   document.getElementById("loveTimer").innerText=
-  "Together for "+days+" beautiful days ❤️";
+  "Together for "+days+" beautiful days ❤️... and life time more with you 💝💞💞";
 }
 setInterval(updateTimer,1000);
 updateTimer();
